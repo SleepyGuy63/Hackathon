@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PulseRoute | Emergency Command Center</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<div class="app">
+
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon">✚</div>
+            <div>
+                <h2>PulseRoute</h2>
+                <span>Emergency network</span>
+            </div>
+        </div>
+
+        <div class="nav-label">Main menu</div>
+        <a class="nav-item active" href="#dashboard">▦ Dashboard</a>
+        <a class="nav-item" href="#tracking">⌖ Live Tracking</a>
+        <a class="nav-item" href="#patient">♡ Patient Monitor</a>
+        <a class="nav-item" href="#hospital">✚ Hospital Status</a>
+
+        <div class="sidebar-bottom">
+            <div class="system-status">
+                <span class="live-dot"></span>
+                <div><strong>System Online</strong><small>Demo environment</small></div>
+            </div>
+            <div class="profile">
+                <div class="avatar">PR</div>
+                <div><strong>Command Center</strong><small>Administrator</small></div>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-content" id="dashboard">
+
+        <header class="topbar">
+            <div>
+                <p class="eyebrow">Emergency response platform</p>
+                <h1>Command Dashboard</h1>
+                <p class="subheading">Monitor emergencies and coordinate response operations.</p>
+            </div>
+            <div class="top-actions">
+                <span class="live-label"><span class="live-dot"></span> LIVE SIMULATION</span>
+                <div class="date-box" id="clock">Loading...</div>
+            </div>
+        </header>
+
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-top"><span>Active Emergencies</span><span class="stat-icon red">!</span></div>
+                <h2 id="activeCount">01</h2>
+                <p>Currently monitored</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-top"><span>Available Ambulances</span><span class="stat-icon blue">✚</span></div>
+                <h2 id="ambulanceCount">04</h2>
+                <p>Fleet availability (demo)</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-top"><span>Average Response</span><span class="stat-icon green">◷</span></div>
+                <h2>08 min</h2>
+                <p>Illustrative demo value</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-top"><span>Hospitals Online</span><span class="stat-icon purple">✚</span></div>
+                <h2>06</h2>
+                <p>Connected demo facilities</p>
+            </div>
+        </section>
+
+        <section class="content-grid">
+
+            <div class="panel map-panel" id="tracking">
+                <div class="panel-heading">
+                    <div>
+                        <h3>Live Emergency Tracking</h3>
+                        <p>Ambulance location and proposed route</p>
+                    </div>
+                    <span class="map-status">● MAP ACTIVE</span>
+                </div>
+
+                <div class="map-wrap" id="mapWrap">
+                    <div id="map"></div>
+                    <button class="map-fs" id="fsBtn" type="button">⛶ Full screen</button>
+                    <div class="map-hud"><span id="hudStatus">Standby</span><b id="hudEta">—</b><button type="button" id="hudStart">▶ Start</button></div>
+                    <div class="map-tools">
+                        <button type="button" id="locBtn">⌖ Use my location</button>
+                        <button type="button" id="pickBtn">✥ Set start</button>
+                        <small id="startInfo">Start: default point</small>
+                    </div>
+                </div>
+
+                <div class="map-legend">
+                    <span><i class="legend-dot red-dot"></i> Ambulance</span>
+                    <span><i class="legend-dot blue-dot"></i> Hospital</span>
+                    <span><i class="legend-line"></i> Shortest route</span>
+                    <span><i class="legend-dot red-dot"></i> Red signal</span>
+                    <span><i class="legend-dot green-dot"></i> Green signal</span>
+                    <span id="signalInfo">Signals: -</span>
+                </div>
+
+                <div class="map-buttons">
+                    <button class="primary-btn" id="startDemo">▶ Start Emergency Demo</button>
+                    <button class="secondary-btn" id="resetDemo">↻ Reset</button>
+                    <label class="toggle"><input type="checkbox" id="autoSignals" checked><span class="slider"></span> Auto green corridor</label>
+                </div>
+            </div>
+
+            <div class="right-column">
+
+                <div class="panel hospitals-panel" id="hospital">
+                    <div class="panel-heading">
+                        <div><h3>Nearby Hospitals</h3><p>Pick one to set the destination and dispatch</p></div>
+                        <span class="map-status" id="hospCount">Searching...</span>
+                    </div>
+                    <div class="hosp-list" id="hospList"></div>
+                </div>
+
+                <div class="panel emergency-panel">
+                    <div class="panel-heading">
+                        <div><h3>Emergency Details</h3><p>Current simulated incident</p></div>
+                        <span class="priority">HIGH PRIORITY</span>
+                    </div>
+                    <div class="incident-id">Incident #PR-001</div>
+                    <div class="detail-row"><span>Ambulance ID</span><strong>AMB-04</strong></div>
+                    <div class="detail-row"><span>Destination</span><strong id="destName">Select a hospital</strong></div>
+                    <div class="detail-row"><span>Shortest route</span><strong id="routeKm">—</strong></div>
+                    <div class="detail-row"><span>Estimated Arrival</span><strong id="eta">—</strong></div>
+                    <div class="detail-row"><span>Incident Status</span><strong class="status-text" id="incidentStatus">Standby</strong></div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="panel patient-big" id="patient">
+            <div class="panel-heading">
+                <div><h3>Patient Health and Hospital Readiness</h3><p>Live monitoring, with an emergency checklist sent to the destination hospital</p></div>
+                <span class="monitor-live">● LIVE</span>
+            </div>
+            <div class="patient-grid">
+                <div class="pt-left">
+                    <div class="pt-details">
+                        <div class="pt-head">
+                            <div class="avatar" id="ptAvatar">AK</div>
+                            <div class="pt-title"><strong id="ptTitle">Amit Kumar</strong><small id="ptSub">54 yrs</small></div>
+                            <span class="tag-sim">Simulated</span>
+                        </div>
+                        <div class="pt-fields">
+                            <label>Name<input id="pName" value="Amit Kumar" maxlength="40"></label>
+                            <label>Age<input id="pAge" type="number" min="0" max="120" value="54"></label>
+                            <label>Gender<select id="pGender"><option>Male</option><option>Female</option><option>Other</option></select></label>
+                            <label>Blood group<select id="pBlood"><option>A+</option><option>A-</option><option selected>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select></label>
+                            <label>Weight (kg)<input id="pWt" type="number" min="1" max="300" value="72"></label>
+                            <label>Height (cm)<input id="pHt" type="number" min="30" max="250" value="170"></label>
+                            <label>Known allergies<input id="pAllergy" value="Penicillin" maxlength="40"></label>
+                            <label>Emergency contact<input id="pContact" placeholder="+91 XXXXX XXXXX" maxlength="20"></label>
+                            <label class="span2">Emergency type
+                                <select id="condition" aria-label="Emergency type">
+                                    <option value="cardiac">Cardiac emergency</option>
+                                    <option value="trauma">Road accident (trauma)</option>
+                                    <option value="stroke">Stroke</option>
+                                    <option value="breath">Breathing difficulty</option>
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="traces">
+                        <div class="trace"><span class="trace-label">ECG · Lead II</span><b class="trace-val" id="tv-ecg"></b><canvas id="ecg"></canvas></div>
+                        <div class="trace"><span class="trace-label">SpO₂ pulse wave</span><b class="trace-val" id="tv-pleth"></b><canvas id="pleth"></canvas></div>
+                        <div class="trace"><span class="trace-label">Arterial blood pressure</span><b class="trace-val" id="tv-abp"></b><canvas id="abp"></canvas></div>
+                        <div class="trace"><span class="trace-label">Respiration</span><b class="trace-val" id="tv-resp"></b><canvas id="resp"></canvas></div>
+                    </div>
+                </div>
+                <div class="pt-right">
+                    <div class="vitals-grid">
+                        <div class="vital" id="v-hr"><span>Heart rate</span><h2 id="heartRate">82 <small>BPM</small></h2></div>
+                        <div class="vital" id="v-spo2"><span>Blood oxygen</span><h2 id="spo2">98 <small>%</small></h2></div>
+                        <div class="vital" id="v-bp"><span>Blood pressure</span><h2 id="bp">120/80 <small>mmHg</small></h2></div>
+                        <div class="vital" id="v-rr"><span>Breathing rate</span><h2 id="resp">16 <small>/min</small></h2></div>
+                        <div class="vital" id="v-temp"><span>Temperature</span><h2 id="temp">36.8 <small>°C</small></h2></div>
+                        <div class="vital ok" id="v-st"><span>Patient condition</span><h2 id="ptStatus">Stable</h2></div>
+                    </div>
+
+                    <h4>What the hospital must prepare</h4>
+                    <div class="ready"><div class="ready-bar"><i id="readyBar"></i></div><small id="readyText">Checklist not sent yet</small></div>
+                    <div id="checklist" class="checklist"></div>
+                    <button class="primary-btn" id="sendBtn" type="button">Send checklist to hospital</button>
+                </div>
+            </div>
+            <div class="patient-note">Patient information is simulated for demonstration.</div>
+        </section>
+
+        <section class="bottom-grid">
+
+            <div class="panel activity-panel">
+                <div class="panel-heading">
+                    <div>
+                        <h3>Response Activity</h3>
+                        <p>Recent system events</p>
+                    </div>
+                </div>
+
+                <div id="activityList">
+                    <div class="activity-item">
+                        <span class="activity-marker"></span>
+                        <div><strong>Ambulance dispatched</strong><small>AMB-04 assigned to incident PR-001</small></div>
+                    </div>
+                    <div class="activity-item">
+                        <span class="activity-marker blue-marker"></span>
+                        <div><strong>Hospital notified</strong><small>The selected hospital received an alert</small></div>
+                    </div>
+                    <div class="activity-item">
+                        <span class="activity-marker green-marker"></span>
+                        <div><strong>Route calculated</strong><small>Demo corridor generated successfully</small></div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <footer>
+            <span>PulseRoute © 2026</span>
+            <span>AI-Powered Emergency Response Corridor</span>
+            <span>Academic Demonstration Project</span>
+        </footer>
+
+    </main>
+</div>
+
+<script src="script.js"></script>
+<script src="hospitals.js"></script>
+<script src="patient.js"></script>
+<script src="enhance.js"></script>
+</body>
+</html>
